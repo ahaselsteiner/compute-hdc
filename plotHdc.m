@@ -108,7 +108,15 @@ else
 
     end
 end
-suptitle(titleString);
+if exist('suptitle') == 2
+    suptitle(titleString);
+else % thanks to: https://de.mathworks.com/matlabcentral/newsreader/view_thread/244434
+    set(gcf,'NextPlot','add');
+    axes;
+    h = title(titleString);
+    set(gca,'Visible','off');
+    set(h,'Visible','on');
+end
 end
 
-% code by Andras F. Haselsteiner, December 23, 2016
+% code by Andras F. Haselsteiner, April 24th, 2017

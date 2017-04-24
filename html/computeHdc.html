@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>computeHdc</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-01-11"><meta name="DC.source" content="computeHdc.m"><style type="text/css">
+      --><title>computeHdc</title><meta name="generator" content="MATLAB 9.1"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-04-24"><meta name="DC.source" content="computeHdc.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,8 +66,23 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>computeHdc</h1><!--introduction--><p>Computes a highest density contour for a given exceedance probability. Currently works for probability density functions with up to 4 dimensions.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Function input parameters</a></li><li><a href="#2">Function output parameters</a></li><li><a href="#3">Theoretical background</a></li><li><a href="#4">License</a></li></ul></div><h2>Function input parameters<a name="1"></a></h2><p><i>ModelArray</i>: probability density model, see getEnvironmentalPdfModel() to see which fields the struct has, default = an example pdf is shown</p><p><i>alpha</i>: exceedance probability, default = 6.8e-6 (corresponds to a return period of 50 years with 3 hours sea states)</p><p><i>gridCenterPoints</i>: center points of the grid cells (the numeric integration scheme works on an orthogonal grid); formatted as cell, thus gridCenterPoints{1} contains the vector for the first variable / dimension; default = the <i>ModelArray</i> .gridCenterPoints field is used</p><p><i>shouldPlot</i>: if 1 the contour is plotted, default = 0</p><h2>Function output parameters<a name="2"></a></h2><p><i>fm</i>: minimum probability density of the enclosed region / probability density along the contour</p><p><i>x1Hdc</i>: x1 coordinates of the points along the contour, since there can be multiple enclosed contiguous regions the output is a cell array with each element representing one connected boundary</p><p><i>x2Hdc</i>: x2 coordinates of the points along the contour</p><p><i>x3Hdc</i>: x3 coordinates of the points along the contour</p><p><i>x4Hdc</i>: x4 coordinates of the points along the contour</p><h2>Theoretical background<a name="3"></a></h2><p>Highest density contours (HDC) enclose highest density regions (HDR) and have been proposed in the publication "Deriving environmental contours from highest density regions" by Haselsteiner, Ohlendorf, Wosnoik, Thoben (https://arxiv.org/pdf/1701.02666v1.pdf). This Matlab implementation has been developed with the publication.</p><h2>License<a name="4"></a></h2><p>Author: Andreas F. Haselsteiner (<a href="mailto:a.haselsteiner@uni-bremen.de">a.haselsteiner@uni-bremen.de</a>)</p><p>Version: 1.0.0.2 (January 11th, 2017)</p><p>First version: December 14th, 2016</p><p>Suggestions / improvements are most welcome! Contact me.</p><pre class="codeinput"><span class="keyword">function</span> [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ModelArray, alpha, <span class="keyword">...</span>
+  </style></head><body><div class="content"><h1>computeHdc</h1><!--introduction--><p>Computes a highest density contour for a given exceedance probability. Currently works for probability density functions with up to 4 dimensions.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Function input parameters</a></li><li><a href="#2">Function output parameters</a></li><li><a href="#3">Theoretical background</a></li><li><a href="#4">License</a></li></ul></div><h2 id="1">Function input parameters</h2><p><i>ModelArray</i>: probability density model, see getEnvironmentalPdfModel() to see which fields the struct has, default = an example pdf is shown</p><p><i>alpha</i>: exceedance probability, default = 6.8e-6 (corresponds to a return period of 50 years with 3 hours sea states)</p><p><i>gridCenterPoints</i>: center points of the grid cells (the numeric integration scheme works on an orthogonal grid); formatted as cell, thus gridCenterPoints{1} contains the vector for the first variable / dimension; default = the <i>ModelArray</i> .gridCenterPoints field is used</p><p><i>shouldPlot</i>: if 1 the contour is plotted, default = 0</p><h2 id="2">Function output parameters</h2><p><i>fm</i>: minimum probability density of the enclosed region / probability density along the contour</p><p><i>x1Hdc</i>: x1 coordinates of the points along the contour, since there can be multiple enclosed contiguous regions the output is a cell array with each element representing one connected boundary</p><p><i>x2Hdc</i>: x2 coordinates of the points along the contour</p><p><i>x3Hdc</i>: x3 coordinates of the points along the contour</p><p><i>x4Hdc</i>: x4 coordinates of the points along the contour</p><h2 id="3">Theoretical background</h2><p>Highest density contours (HDC) enclose highest density regions (HDR) and have been proposed in the publication "Deriving environmental contours from highest density regions" by Haselsteiner, Ohlendorf, Wosnoik, Thoben (<a href="http://doi.org/10.1016/j.coastaleng.2017.03.002">http://doi.org/10.1016/j.coastaleng.2017.03.002</a>). This Matlab implementation has been developed with the publication.</p><h2 id="4">License</h2><p>Author: Andreas F. Haselsteiner (<a href="mailto:a.haselsteiner@uni-bremen.de">a.haselsteiner@uni-bremen.de</a>)</p><p>Version: 1.0.1.0 (April 24th, 2017)</p><p>First version: December 14th, 2016</p><p>Suggestions / improvements are most welcome! Contact me.</p><pre class="codeinput"><span class="keyword">function</span> [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ModelArray, alpha, <span class="keyword">...</span>
     gridCenterPoints, shouldPlot)
+
+<span class="comment">% --- check required software (Matlab + toolboxes / Octave + packages ) ---</span>
+isOctave = exist(<span class="string">'OCTAVE_VERSION'</span>, <span class="string">'builtin'</span>) ~= 0; <span class="comment">% thanks to: http://stackoverflow.com/questions/2246579/how-do-i-detect-if-im-running-matlab-or-octave</span>
+<span class="keyword">if</span> isOctave <span class="comment">% load the required packages</span>
+    pkg <span class="string">load</span> <span class="string">image</span>
+    pkg <span class="string">load</span> <span class="string">statistics</span>
+<span class="keyword">else</span>
+    hasAllToolboxes = license(<span class="string">'test'</span>, <span class="string">'image_toolbox'</span>) &amp;&amp; <span class="keyword">...</span>
+        license(<span class="string">'test'</span>, <span class="string">'statistics_toolbox'</span>);
+    <span class="keyword">if</span> ~hasAllToolboxes
+        msg = [<span class="string">'Error. computeHdc requires the image and statistics '</span> <span class="keyword">...</span>
+            <span class="string">'toolbox. Exiting.'</span>];
+        error(msg)
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
 
 <span class="comment">% --- validate input parameters ---</span>
 <span class="keyword">if</span> ~exist(<span class="string">'ModelArray'</span>, <span class="string">'var'</span>)
@@ -112,7 +127,7 @@ ans =
 
    8.4301e-07
 
-</pre><img vspace="5" hspace="5" src="computeHdc_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+</pre><img vspace="5" hspace="5" src="computeHdc_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2016b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% computeHdc
 % Computes a highest density contour for a given exceedance probability.
@@ -152,14 +167,14 @@ ans =
 % Highest density contours (HDC) enclose highest density regions (HDR)
 % and have been proposed in the publication "Deriving environmental 
 % contours from highest density regions" by Haselsteiner, Ohlendorf,
-% Wosnoik, Thoben (https://arxiv.org/pdf/1701.02666v1.pdf). This Matlab
-% implementation has been developed with the publication.
+% Wosnoik, Thoben (http://doi.org/10.1016/j.coastaleng.2017.03.002). This
+% Matlab implementation has been developed with the publication.
 %
 %
 %% License
 % Author: Andreas F. Haselsteiner (a.haselsteiner@uni-bremen.de)
 % 
-% Version: 1.0.0.2 (January 11th, 2017)
+% Version: 1.0.1.0 (April 24th, 2017)
 %
 % First version: December 14th, 2016
 %
@@ -167,6 +182,21 @@ ans =
 
 function [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ModelArray, alpha, ...
     gridCenterPoints, shouldPlot)
+
+% REPLACE_WITH_DASH_DASH- check required software (Matlab + toolboxes / Octave + packages ) REPLACE_WITH_DASH_DASH-
+isOctave = exist('OCTAVE_VERSION', 'builtin') ~= 0; % thanks to: http://stackoverflow.com/questions/2246579/how-do-i-detect-if-im-running-matlab-or-octave
+if isOctave % load the required packages
+    pkg load image
+    pkg load statistics
+else
+    hasAllToolboxes = license('test', 'image_toolbox') && ...
+        license('test', 'statistics_toolbox');
+    if ~hasAllToolboxes
+        msg = ['Error. computeHdc requires the image and statistics ' ...
+            'toolbox. Exiting.'];
+        error(msg)
+    end    
+end
 
 % REPLACE_WITH_DASH_DASH- validate input parameters REPLACE_WITH_DASH_DASH-
 if ~exist('ModelArray', 'var')

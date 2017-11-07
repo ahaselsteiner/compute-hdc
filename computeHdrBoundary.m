@@ -30,8 +30,9 @@ if p == 2
         x2Hdc{i} = gridCenterPoints{2}(B{i}(:,2))';
     end
 else
+    structuring_element = true(zeros(1,p)+3); % for image erosion algorithm
     if p == 3  
-        surfaceVoxels = hdrBinary - imerode(hdrBinary, true(3));
+        surfaceVoxels = hdrBinary - imerode(hdrBinary, structuring_element);
         surfaceVoxelsIndices=find(surfaceVoxels);
         [i1,i2,i3] = ind2sub(size(surfaceVoxels),surfaceVoxelsIndices);
         x1Hdc{1} = gridCenterPoints{1}(i1);
@@ -39,7 +40,7 @@ else
         x3Hdc{1} = gridCenterPoints{3}(i3);  
     else
         if p==4
-            boundaryPoints = hdrBinary - imerode(hdrBinary, true(4));
+            boundaryPoints = hdrBinary - imerode(hdrBinary, structuring_element);
             boundaryPointsIndices=find(boundaryPoints);
             [i1,i2,i3,i4] = ind2sub(size(boundaryPoints),boundaryPointsIndices);
             x1Hdc{1} = gridCenterPoints{1}(i1);
@@ -51,4 +52,4 @@ else
 end
 end
 
-% code by Andras F. Haselsteiner, December 23, 2016
+% code by Andras F. Haselsteiner, November 7, 2017

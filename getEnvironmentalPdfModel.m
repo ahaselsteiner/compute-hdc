@@ -6,6 +6,8 @@ function ModelArray = getEnvironmentalPdfModel(index)
 %   4 = 3 dimensional model
 %   5 = 4 dimensional model
 %   6 = 3 dimensional model with two highest density regions
+%
+%   feel free to add your probabilistic model (see line 113 & 117)
 
 ModelArrayVanem2012.name = 'Vanem and Bitner-Gregersen (2012)';
 ModelArrayVanem2012.gridCenterPoints = {0:0.1:20 0:0.1:18};
@@ -108,12 +110,14 @@ ModelArrayMixtureModel23D(3).coeff = { @(x1,x2)0.1000 + 1.489 * x1^0.1901;
                     @(x1,x2)0.0400 + 0.1748 * exp(-0.2243*x1)};
 ModelArrayMixtureModel23D(3).label = 'x3 [-]';
 
+% define your probabilistic model here
+
 ModelArrayArray = {ModelArrayVanem2012 ModelArrayMixtureModel1 ...
     ModelArrayMixtureModel2 ModelArrayVanem3d ModelArrayVanem4d ...
-    ModelArrayMixtureModel23D};
+    ModelArrayMixtureModel23D}; % and add it to the Array here
 
 ModelArray = ModelArrayArray{index};
 
 end
 
-% Author: Andras F. Haselsteiner, December 14, 2016
+% Author: Andreas F. Haselsteiner, November 7, 2017

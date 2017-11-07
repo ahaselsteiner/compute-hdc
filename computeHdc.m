@@ -43,7 +43,7 @@
 %% License
 % Author: Andreas F. Haselsteiner (a.haselsteiner@uni-bremen.de)
 % 
-% Version: 1.0.1.0 (April 24th, 2017)
+% Version: 1.0.2.0 (November 7th, 2017)
 %
 % First version: December 14th, 2016
 %

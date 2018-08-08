@@ -10,4 +10,4 @@ Fbar = sum(cellProbability(:));
 
 end
 
-% Author: Andras F. Haselsteiner, December 23, 2016
+% Author: Andras F. Haselsteiner

@@ -120,4 +120,4 @@ ModelArray = ModelArrayArray{index};
 
 end
 
-% Author: Andreas F. Haselsteiner, November 7, 2017
+% Author: Andreas F. Haselsteiner

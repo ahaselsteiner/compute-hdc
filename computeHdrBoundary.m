@@ -52,4 +52,4 @@ else
 end
 end
 
-% code by Andras F. Haselsteiner, November 7, 2017
+% code by Andras F. Haselsteiner

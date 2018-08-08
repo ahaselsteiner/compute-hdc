@@ -119,4 +119,4 @@ else % thanks to: https://de.mathworks.com/matlabcentral/newsreader/view_thread/
 end
 end
 
-% code by Andras F. Haselsteiner, April 24th, 2017
+% code by Andras F. Haselsteiner

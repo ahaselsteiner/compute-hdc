@@ -1,4 +1,4 @@
-function ModelArray = getEnvironmentalPdfModel(index)
+function ModelArray = getProbabilisticModel(index)
 %GETENVIRONMENTALPDFMODEL returns a stored probability density model
 %   1 = Vanem and Bitner-Gergersen (2012)
 %   2 = mixture model 1 (much density overlap)

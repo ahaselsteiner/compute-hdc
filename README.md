@@ -9,7 +9,7 @@ This software involves a couple of .m files:
 * `computeHdc`: Computes the contour. It needs a probabilistic model, 
 an exceedance probability and a grid as its input.
 * `computeHdcExample`: Cotains examples how to use `computeHdc`.
-* `getEnvironmentalPdfModel`: Returns some sample probabilistic models, 
+* `getProbabilisticModel`: Returns some sample probabilistic models, 
 which can be used with `computeHdc`. 
 * The other functions are subroutines needed for `computeHdc`.
 

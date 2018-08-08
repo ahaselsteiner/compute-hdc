@@ -59,4 +59,4 @@ end
 fbar = (Fhigh - Flow)./dx;
 end
 
-% Author: Andras F. Haselsteiner
+% Author: Andreas F. Haselsteiner

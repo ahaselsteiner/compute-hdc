@@ -38,10 +38,6 @@
 % contours from highest density regions" by Haselsteiner, Ohlendorf,
 % Wosnoik, Thoben (http://doi.org/10.1016/j.coastaleng.2017.03.002). This
 % Matlab implementation has been developed with the publication.
-%
-%
-%% License
-% Author: Andreas F. Haselsteiner (a.haselsteiner@uni-bremen.de)
 
 
 function [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(PM, alpha, ...
@@ -107,3 +103,5 @@ if shouldPlot
     plotHdc(PM, alpha, gridCenterPoints, fbarjoint, hdrBinary, ...
         x1Hdc, x2Hdc, x3Hdc, x4Hdc);
 end
+
+% Author: Andreas F. Haselsteiner

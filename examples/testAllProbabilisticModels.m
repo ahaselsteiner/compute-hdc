@@ -11,3 +11,5 @@ for i =1:8
     % Calculate the highest density contour and plot it.
     [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(PM, alpha, PM.gridCenterPoints, 1);
 end
+
+% Author: Andreas F. Haselsteiner

@@ -13,3 +13,5 @@ gridCenterPoints = {0:0.1:20 0:0.1:18};
 
 % Calculate the highest density contour and plot it
 [fm, x1Hdc, x2Hdc] = computeHdc(ProbModel, alpha, gridCenterPoints, 1);
+
+% Author: Andreas F. Haselsteiner

@@ -57,4 +57,4 @@ if (probability_in_domain < MIN_PROB_IN_DOMAIN)
 end
 
 
-% Author: Andras F. Haselsteiner
+% Author: Andreas F. Haselsteiner

@@ -52,4 +52,4 @@ else
 end
 end
 
-% code by Andras F. Haselsteiner
+% Author: Andreas F. Haselsteiner

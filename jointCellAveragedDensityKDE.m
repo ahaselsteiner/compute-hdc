@@ -71,4 +71,4 @@ else
     error(msg);
 end
 
-% Author: Andreas F. Haselsteiner, March 29th, 2017
+% Author: Andreas F. Haselsteiner

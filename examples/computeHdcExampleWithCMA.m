@@ -3,7 +3,7 @@
 % This highest density contour (HDC) implementation works up to 4
 % dimensions.
 %
-% The function getEnvironmentalPdfModel() provides some sample probability
+% The function getProbabilisticModel() provides some sample probability
 % density models.
 
 %% Example 1: 2-dimensional contour

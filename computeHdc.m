@@ -4,7 +4,7 @@
 %
 %% Function input parameters
 %
-% _ModelArray_: probability density model, see getEnvironmentalPdfModel()
+% _ProbModel_: probabilistic model, see getProbabilisticModel()
 % to see which fields the struct has, default = an example pdf is shown
 %
 % _alpha_: exceedance probability, default = 6.8e-6 (corresponds to a return 
@@ -13,7 +13,7 @@
 % _gridCenterPoints_: center points of the grid cells (the numeric 
 % integration scheme works on an orthogonal grid); formatted as cell,
 % thus gridCenterPoints{1} contains the vector for the first variable 
-% / dimension; default = the _ModelArray_ .gridCenterPoints field is used
+% / dimension; default = the _ProbModel_ .gridCenterPoints field is used
 %
 % _shouldPlot_: if 1 the contour is plotted, default = 0
 %
@@ -49,7 +49,7 @@
 %
 % Suggestions / improvements are most welcome! Contact me.
 
-function [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ModelArray, alpha, ...
+function [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ProbModel, alpha, ...
     gridCenterPoints, shouldPlot)
 
 % --- check required software (Matlab + toolboxes / Octave + packages ) ---
@@ -68,16 +68,16 @@ else
 end
 
 % --- validate input parameters ---
-if ~exist('ModelArray', 'var')
-    disp('Warning: No ModelArray has been entered. Showing example.');
-    ModelArray = getEnvironmentalPdfModel(1);
+if ~exist('ProbModel', 'var')
+    disp('Warning: No probabilistic model, "ProbModel", has been entered. Showing example.');
+    ProbModel = getProbabilisticModel(1);
     shouldPlot = 1;
 end
 if ~exist('alpha', 'var')
-    alpha = 1/(50*365.25*24/3); % 50 years with 3 hour sea states
+    alpha = 1/(50*365.25*24/3); % 50 years with 3 hour environmental states
 end
 if ~exist('gridCenterPoints', 'var')
-    gridCenterPoints = ModelArray.gridCenterPoints;
+    gridCenterPoints = ProbModel.gridCenterPoints;
 end
 if ~exist('shouldPlot', 'var')
     shouldPlot = 0;
@@ -93,7 +93,7 @@ for i = 1:p
 end
 
 % --- compute hdc ---
-fbarjoint = jointCellAveragedPdf(ModelArray, gridCenterPoints);
+fbarjoint = jointCellAveragedDensity(ProbModel, gridCenterPoints);
 Fbarzero = @(fm)probabilityOfHdr(fbarjoint, fm, cellSize) - 1 + alpha;
 fm = fzero(Fbarzero, 0);
 hdrBinary = fbarjoint >= fm;
@@ -101,6 +101,6 @@ hdrBinary = fbarjoint >= fm;
 
 % --- plot ---
 if shouldPlot
-    plotHdc(ModelArray, alpha, gridCenterPoints, fbarjoint, hdrBinary, ...
+    plotHdc(ProbModel, alpha, gridCenterPoints, fbarjoint, hdrBinary, ...
         x1Hdc, x2Hdc, x3Hdc, x4Hdc);
 end

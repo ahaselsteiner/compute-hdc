@@ -1,122 +1,144 @@
-function ModelArray = getProbabilisticModel(index)
-%GETENVIRONMENTALPDFMODEL returns a stored probability density model
+function ProbModel = getProbabilisticModel(index)
+%GETENVIRONMENTALPDFMODEL returns a stored probabilitistic model
 %   1 = Vanem and Bitner-Gergersen (2012)
-%   2 = mixture model 1 (much density overlap)
-%   3 = mixture model 2 (little density overlap)
+%   2 = mixture model 1 from Haselsteiner et al. (2017) (much density overlap)
+%   3 = mixture model 2 from Haselsteiner et al. (2017) (little density overlap)
 %   4 = 3 dimensional model
 %   5 = 4 dimensional model
 %   6 = 3 dimensional model with two highest density regions
+%   7 = non-parametric model based on kernel density estimation (2D)
+%   8 = non-parametric model based on kernel density estimation (3D)
 %
-%   feel free to add your probabilistic model (see line 113 & 117)
+%   Feel free to add your probabilistic model (see line 135 & 139)
 
-ModelArrayVanem2012.name = 'Vanem and Bitner-Gregersen (2012)';
-ModelArrayVanem2012.gridCenterPoints = {0:0.1:20 0:0.1:18};
-ModelArrayVanem2012(1).distribution = 'weibull';
-ModelArrayVanem2012(1).isConditional = [0 0 0];
-ModelArrayVanem2012(1).coeff = {2.776 1.471 0.8888};
-ModelArrayVanem2012(1).label = 'significant wave height [m]';
-ModelArrayVanem2012(2).distribution = 'lognormal';
-ModelArrayVanem2012(2).isConditional = [1 1];
-ModelArrayVanem2012(2).coeff = { @(x1)0.1000 + 1.489 * x1^0.1901;
-                    @(x1)0.0400 + 0.1748 * exp(-0.2243*x1)};
-ModelArrayVanem2012(2).label = 'zero-upcrossing period [s]';
+% model 1
+ProbModelVanem2012.name = 'Vanem and Bitner-Gregersen (2012)';
+ProbModelVanem2012.modelType = 'CMA';
+ProbModelVanem2012.distributions = {'weibull'; 'lognormal'};
+ProbModelVanem2012.isConditionals = {[0 0 0]; [1 1]};
+ProbModelVanem2012.coeffs = {{2.776 1.471 0.8888}; 
+                             { @(x1)0.1000 + 1.489 * x1^0.1901;
+                               @(x1)0.0400 + 0.1748 * exp(-0.2243*x1)}
+                            };
+ProbModelVanem2012(1).labels = {'significant wave height (m)';
+                                'zero-upcrossing period [s]'};
+ProbModelVanem2012.gridCenterPoints = {0:0.1:20 0:0.1:18};
 
-ModelArrayMixtureModel1.name = 'mixture model 1';
-ModelArrayMixtureModel1.gridCenterPoints = {0:0.1:20 0:0.1:18};
-ModelArrayMixtureModel1(1).distribution = 'weibull';
-ModelArrayMixtureModel1(1).isConditional = [0 0 0];
-ModelArrayMixtureModel1(1).coeff = {2.776 1.471 0.8888};
-ModelArrayMixtureModel1(1).label = 'significant wave height [m]';
-ModelArrayMixtureModel1(2).distribution = 'lognormnormmixture';
-ModelArrayMixtureModel1(2).isConditional = [1 1 1 0 0];
-ModelArrayMixtureModel1(2).coeff = { @(x1)1 * (1 - exp(-3*x1));
-                    @(x1)0.1000 + 1.489 * x1^0.1901;
-                    @(x1)0.0400 + 0.1748 * exp(-0.2243*x1);
-                    10;
-                    2};
-ModelArrayMixtureModel1(2).label = 'zero-upcrossing period [s]';
+% model 2
+ProbModelMixtureModel1.name = 'mixture model 1 from Haselsteiner et al. (2017)';
+ProbModelMixtureModel1.modelType = 'CMA';
+ProbModelMixtureModel1(1).distributions = {'weibull'; 'lognormnormmixture'};
+ProbModelMixtureModel1(1).isConditionals = {[0 0 0];
+                                            [1 1 1 0 0];};
+ProbModelMixtureModel1(1).coeffs = {{2.776 1.471 0.8888};
+                                    { @(x1)1 * (1 - exp(-3*x1));
+                                      @(x1)0.1000 + 1.489 * x1^0.1901;
+                                      @(x1)0.0400 + 0.1748 * exp(-0.2243*x1);
+                                      10;
+                                      2
+                                    }
+                                   };
+ProbModelMixtureModel1(1).labels = {'significant wave height (m)';
+                                    'zero-upcrossing period (s)'};
+ProbModelMixtureModel1.gridCenterPoints = {0:0.1:20 0:0.1:18};
 
-ModelArrayMixtureModel2.name = 'mixture model 2';
-ModelArrayMixtureModel2.gridCenterPoints = {0:0.1:20 0:0.1:18};
-ModelArrayMixtureModel2(1).distribution = 'weibull';
-ModelArrayMixtureModel2(1).isConditional = [0 0 0];
-ModelArrayMixtureModel2(1).coeff = {2.776 1.471 0.8888};
-ModelArrayMixtureModel2(1).label = 'significant wave height [m]';
-ModelArrayMixtureModel2(2).distribution = 'lognormnormmixture';
-ModelArrayMixtureModel2(2).isConditional = [1 1 1 0 0];
-ModelArrayMixtureModel2(2).coeff = { @(x1)1 * (1 - exp(-3*x1));
-                    @(x1)0.1000 + 1.489 * x1^0.1901;
-                    @(x1)0.0400 + 0.1748 * exp(-0.2243*x1);
-                    15;
-                    0.5};
-ModelArrayMixtureModel2(2).label = 'zero-upcrossing period [s]';
+% model 3
+ProbModelMixtureModel2.name = 'mixture model 2 from Haselsteiner et al. (2017)';
+ProbModelMixtureModel2.modelType = 'CMA';
+ProbModelMixtureModel2(1).distributions = {'weibull'; 'lognormnormmixture'};
+ProbModelMixtureModel2(1).isConditionals = {[0 0 0]; [1 1 1 0 0];};
+ProbModelMixtureModel2(1).coeffs = {{2.776 1.471 0.8888};
+                                    { @(x1)1 * (1 - exp(-3*x1));
+                                      @(x1)0.1000 + 1.489 * x1^0.1901;
+                                      @(x1)0.0400 + 0.1748 * exp(-0.2243*x1);
+                                      15;
+                                      0.5
+                                    }
+                                   };
+ProbModelMixtureModel2(1).labels = {'significant wave height (m)';
+                                    'zero-upcrossing period (s)'};
+ProbModelMixtureModel2.gridCenterPoints = {0:0.1:20 0:0.1:18};
 
-ModelArrayVanem3d.name = 'Vanem and Bitner-Gregersen (2012) 3d';
-ModelArrayVanem3d.gridCenterPoints = {0:1:20 0:1:18 0:1:18};
-ModelArrayVanem3d(1).distribution = 'weibull';
-ModelArrayVanem3d(1).isConditional = [0 0 0];
-ModelArrayVanem3d(1).coeff = {2.776 1.471 0.8888};
-ModelArrayVanem3d(1).label = 'significant wave height [m]';
-ModelArrayVanem3d(2).distribution = 'lognormal';
-ModelArrayVanem3d(2).isConditional = [1 1];
-ModelArrayVanem3d(2).coeff = { @(x1)0.1000 + 1.489 * x1^0.1901;
-                    @(x1)0.0400 + 0.1748 * exp(-0.2243*x1)};
-ModelArrayVanem3d(2).label = 'zero-upcrossing period [s]';
-ModelArrayVanem3d(3).distribution = 'lognormal';
-ModelArrayVanem3d(3).isConditional = [1 1];
-ModelArrayVanem3d(3).coeff = { @(x1,x2)0.1000 + 1.489 * x1^0.1901;
-                    @(x1,x2)0.0400 + 0.1748 * exp(-0.2243*x1)};
-ModelArrayVanem3d(3).label = 'x3 [-]';
+% model 4
+ProbModelVanem3d.name = 'Vanem and Bitner-Gregersen (2012) 3d';
+ProbModelVanem3d.modelType = 'CMA';
+ProbModelVanem3d(1).distributions = {'weibull'; 'lognormal'; 'lognormal'};
+ProbModelVanem3d(1).isConditionals = {[0 0 0]; [1 1]; [1 1]};
+ProbModelVanem3d(1).coeffs = {{2.776 1.471 0.8888};
+                              { @(x1)0.1000 + 1.489 * x1^0.1901;
+                                @(x1)0.0400 + 0.1748 * exp(-0.2243*x1)
+                              };
+                              { @(x1,x2)0.1000 + 1.489 * x1^0.1901;
+                                @(x1,x2)0.0400 + 0.1748 * exp(-0.2243*x1)
+                              }
+                             };
+ProbModelVanem3d(1).labels = {'significant wave height (m)';
+                               'zero-upcrossing period (s)';
+                               'x3 (-)'};
+ProbModelVanem3d.gridCenterPoints = {0:1:20 0:1:18 0:1:18};
 
-ModelArrayVanem4d.name = 'Vanem and Bitner-Gregersen (2012) 4d';
-ModelArrayVanem4d.gridCenterPoints = {0:1:20 0:1:18 0:1:18 0:1:18};
-ModelArrayVanem4d(1).distribution = 'weibull';
-ModelArrayVanem4d(1).isConditional = [0 0 0];
-ModelArrayVanem4d(1).coeff = {2.776 1.471 0.8888};
-ModelArrayVanem4d(1).label = 'significant wave height [m]';
-ModelArrayVanem4d(2).distribution = 'lognormal';
-ModelArrayVanem4d(2).isConditional = [1 1];
-ModelArrayVanem4d(2).coeff = { @(x1)0.1000 + 1.489 * x1^0.1901;
-                    @(x1)0.0400 + 0.1748 * exp(-0.2243*x1)};
-ModelArrayVanem4d(2).label = 'zero-upcrossing period [s]';
-ModelArrayVanem4d(3).distribution = 'lognormal';
-ModelArrayVanem4d(3).isConditional = [1 1];
-ModelArrayVanem4d(3).coeff = { @(x1,x2)0.1000 + 1.489 * x1^0.1901;
-                    @(x1,x2)0.0400 + 0.1748 * exp(-0.2243*x1)};
-ModelArrayVanem4d(3).label = 'x3 [-]';
-ModelArrayVanem4d(4).distribution = 'lognormal';
-ModelArrayVanem4d(4).isConditional = [1 1];
-ModelArrayVanem4d(4).coeff = { @(x1,x2,x3)0.1000 + 1.489 * x1^0.1901;
-                    @(x1,x2,x3)0.0400 + 0.1748 * exp(-0.2243*x1)};
-ModelArrayVanem4d(4).label = 'x4 [-]';
+% model 5
+ProbModelVanem4d.name = 'Vanem and Bitner-Gregersen (2012) 4d';
+ProbModelVanem4d.modelType = 'CMA';
+ProbModelVanem4d(1).distributions = {'weibull';
+                                     'lognormal';
+                                     'lognormal';
+                                     'lognormal'};
+ProbModelVanem4d(1).isConditionals = {[0 0 0];
+                                      [1 1];
+                                      [1 1];
+                                      [1 1]};
+ProbModelVanem4d(1).coeffs = {{2.776 1.471 0.8888};
+                              { @(x1)0.1000 + 1.489 * x1^0.1901;
+                                @(x1)0.0400 + 0.1748 * exp(-0.2243*x1)
+                              };
+                              { @(x1,x2)0.1000 + 1.489 * x1^0.1901;
+                                @(x1,x2)0.0400 + 0.1748 * exp(-0.2243*x1)
+                              };
+                              { @(x1,x2,x3)0.1000 + 1.489 * x1^0.1901;
+                                @(x1,x2,x3)0.0400 + 0.1748 * exp(-0.2243*x1)
+                              };
+                             };
+ProbModelVanem4d(1).labels = {'significant wave height (m)';
+                              'zero-upcrossing period (s)';
+                              'x3 (-)';
+                              'x4 (-)';
+                             };
+ProbModelVanem4d.gridCenterPoints = {0:1:20 0:1:18 0:1:18 0:1:18};
 
-ModelArrayMixtureModel23D.name = 'two HDRs 3D';
-ModelArrayMixtureModel23D.gridCenterPoints = {0:0.5:20 0:0.5:18 0:0.5:18};
-ModelArrayMixtureModel23D(1).distribution = 'weibull';
-ModelArrayMixtureModel23D(1).isConditional = [0 0 0];
-ModelArrayMixtureModel23D(1).coeff = {2.776 1.471 0.8888};
-ModelArrayMixtureModel23D(1).label = 'significant wave height [m]';
-ModelArrayMixtureModel23D(2).distribution = 'lognormnormmixture';
-ModelArrayMixtureModel23D(2).isConditional = [1 1 1 0 0];
-ModelArrayMixtureModel23D(2).coeff = { @(x1)1 * (1 - exp(-3*x1));
-                    @(x1)0.1000 + 1.489 * x1^0.1901;
-                    @(x1)0.0400 + 0.1748 * exp(-0.2243*x1);
-                    16;
-                    0.3};
-ModelArrayMixtureModel23D(2).label = 'zero-upcrossing period [s]';
-ModelArrayMixtureModel23D(3).distribution = 'lognormal';
-ModelArrayMixtureModel23D(3).isConditional = [1 1];
-ModelArrayMixtureModel23D(3).coeff = { @(x1,x2)0.1000 + 1.489 * x1^0.1901;
-                    @(x1,x2)0.0400 + 0.1748 * exp(-0.2243*x1)};
-ModelArrayMixtureModel23D(3).label = 'x3 [-]';
+% model 6
+ProbModelMixtureModel23D.name = 'two HDRs 3D';
+ProbModelMixtureModel23D.modelType = 'CMA';
+ProbModelMixtureModel23D(1).distributions = {'weibull';
+                                             'lognormnormmixture';
+                                             'lognormal'};
+ProbModelMixtureModel23D(1).isConditionals = {[0 0 0];
+                                              [1 1 1 0 0];
+                                              [1 1]};
+ProbModelMixtureModel23D(1).coeffs = {{2.776 1.471 0.8888};
+                                      { @(x1)1 * (1 - exp(-3*x1));
+                                        @(x1)0.1000 + 1.489 * x1^0.1901;
+                                        @(x1)0.0400 + 0.1748 * exp(-0.2243*x1);
+                                        16;
+                                        0.3};
+                                      { @(x1,x2)0.1000 + 1.489 * x1^0.1901;
+                                        @(x1,x2)0.0400 + 0.1748 * exp(-0.2243*x1)};
+                                     };
+ProbModelMixtureModel23D(1).labels = {'significant wave height [m]';
+                                      'zero-upcrossing period [s]';
+                                      'x3 [-]'};
+ProbModelMixtureModel23D.gridCenterPoints = {0:0.5:20 0:0.5:18 0:0.5:18};
 
-% define your probabilistic model here
+% model 7
+load('probabilistic_models/ProbModelKDE2d.mat', 'ProbModelKDE2d');
 
-ModelArrayArray = {ModelArrayVanem2012 ModelArrayMixtureModel1 ...
-    ModelArrayMixtureModel2 ModelArrayVanem3d ModelArrayVanem4d ...
-    ModelArrayMixtureModel23D}; % and add it to the Array here
+% Define your probabilistic model here.
 
-ModelArray = ModelArrayArray{index};
+ProbModelArray = {ProbModelVanem2012 ProbModelMixtureModel1 ...
+    ProbModelMixtureModel2 ProbModelVanem3d ProbModelVanem4d ...
+    ProbModelMixtureModel23D, ProbModelKDE2d}; % And add it to the array here.
+
+ProbModel = ProbModelArray{index};
 
 end
 

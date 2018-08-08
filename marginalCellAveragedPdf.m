@@ -1,6 +1,9 @@
-function fbar = marginalCellAveragedPdf(Model, x, lowerDimensionalXArray)
-%MARGINALCELLAVERAGEDPDF return the marginal probability density of the given Model
-%   Model           struct containing:
+function fbar = marginalCellAveragedPdf(PM, x, lowerDimensionalXArray)
+%MARGINALCELLAVERAGEDPDF returns the marginal probability density of the 
+% given probabilstic model
+%   PM              one dimension of a probabilistic model based on the 
+%                   conditonal modeling approach (modelType='CMA') the 
+%                   struct contains the following fields:
 %                       .distribution - string, e.g. 'weibull', 'lognormal'
 %                       .isConditional - boolean array for each parameter, e.g. [1 1 1]
 %                       .coeff - double array or function array, e.g. [2.3, 1.7, 0.2]
@@ -21,24 +24,24 @@ function fbar = marginalCellAveragedPdf(Model, x, lowerDimensionalXArray)
 dx = x(2)-x(1);
 
 pdfCoeff = zeros(5,1); % setting all parameters to zero, --> Weibull [x1 x2] will become Weibull [x1 x2 0]
-for i = 1:length(Model.coeff)
-    if Model.isConditional(i)
+for i = 1:length(PM.coeff)
+    if PM.isConditional(i)
         switch length(lowerDimensionalXArray)
             case 1
-                pdfCoeff(i) = Model.coeff{i}(lowerDimensionalXArray);
+                pdfCoeff(i) = PM.coeff{i}(lowerDimensionalXArray);
             case 2
-                pdfCoeff(i) = Model.coeff{i}(lowerDimensionalXArray(1), ...
+                pdfCoeff(i) = PM.coeff{i}(lowerDimensionalXArray(1), ...
                     lowerDimensionalXArray(2));
             case 3
-                pdfCoeff(i) = Model.coeff{i}(lowerDimensionalXArray(1), ...
+                pdfCoeff(i) = PM.coeff{i}(lowerDimensionalXArray(1), ...
                     lowerDimensionalXArray(2), lowerDimensionalXArray(3));
         end        
     else
-        pdfCoeff(i) = Model.coeff{i};
+        pdfCoeff(i) = PM.coeff{i};
     end
 end
             
-switch Model.distribution
+switch PM.distribution
     case 'weibull' 
         Fhigh = wblcdf(x+0.5*dx - pdfCoeff(3), pdfCoeff(1), pdfCoeff(2));
         Flow = wblcdf(x-0.5*dx - pdfCoeff(3), pdfCoeff(1), pdfCoeff(2));
@@ -50,8 +53,8 @@ switch Model.distribution
         Flow = cdf_lognormnormmixture(x-0.5*dx, pdfCoeff(1), ...
             pdfCoeff(2), pdfCoeff(3), pdfCoeff(4), pdfCoeff(5));
     otherwise % covers e.g. "normal" and "lognormal"
-        Fhigh = cdf(Model.distribution, x+0.5*dx, pdfCoeff(1), pdfCoeff(2));
-        Flow = cdf(Model.distribution, x-0.5*dx, pdfCoeff(1), pdfCoeff(2));
+        Fhigh = cdf(PM.distribution, x+0.5*dx, pdfCoeff(1), pdfCoeff(2));
+        Flow = cdf(PM.distribution, x-0.5*dx, pdfCoeff(1), pdfCoeff(2));
 end
 fbar = (Fhigh - Flow)./dx;
 end

@@ -42,14 +42,9 @@
 %
 %% License
 % Author: Andreas F. Haselsteiner (a.haselsteiner@uni-bremen.de)
-% 
-% Version: 1.0.2.0 (November 7th, 2017)
-%
-% First version: December 14th, 2016
-%
-% Suggestions / improvements are most welcome! Contact me.
 
-function [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ProbModel, alpha, ...
+
+function [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(PM, alpha, ...
     gridCenterPoints, shouldPlot)
 
 % --- check required software (Matlab + toolboxes / Octave + packages ) ---
@@ -68,16 +63,24 @@ else
 end
 
 % --- validate input parameters ---
-if ~exist('ProbModel', 'var')
-    disp('Warning: No probabilistic model, "ProbModel", has been entered. Showing example.');
-    ProbModel = getProbabilisticModel(1);
+if ~exist('PM', 'var')
+    disp('Warning: No probabilistic model, "PM", has been entered. Showing example.');
+    PM = getProbabilisticModel(1);
     shouldPlot = 1;
 end
 if ~exist('alpha', 'var')
     alpha = 1/(50*365.25*24/3); % 50 years with 3 hour environmental states
 end
 if ~exist('gridCenterPoints', 'var')
-    gridCenterPoints = ProbModel.gridCenterPoints;
+    gridCenterPoints = PM.gridCenterPoints;
+else
+    if PM.modelType == 'KDE'
+        msg = ['Overwriting your input gridCenterPoints to ' ...
+            'PM.gridCenterPoints because gridCenterPoints must be aligned ' ...
+            'with PM.cdf and PM.cdfGrid'];
+        warning(msg);
+        gridCenterPoints = PM.gridCenterPoints;
+    end
 end
 if ~exist('shouldPlot', 'var')
     shouldPlot = 0;
@@ -93,7 +96,7 @@ for i = 1:p
 end
 
 % --- compute hdc ---
-fbarjoint = jointCellAveragedDensity(ProbModel, gridCenterPoints);
+fbarjoint = jointCellAveragedDensity(PM, gridCenterPoints);
 Fbarzero = @(fm)probabilityOfHdr(fbarjoint, fm, cellSize) - 1 + alpha;
 fm = fzero(Fbarzero, 0);
 hdrBinary = fbarjoint >= fm;
@@ -101,6 +104,6 @@ hdrBinary = fbarjoint >= fm;
 
 % --- plot ---
 if shouldPlot
-    plotHdc(ProbModel, alpha, gridCenterPoints, fbarjoint, hdrBinary, ...
+    plotHdc(PM, alpha, gridCenterPoints, fbarjoint, hdrBinary, ...
         x1Hdc, x2Hdc, x3Hdc, x4Hdc);
 end

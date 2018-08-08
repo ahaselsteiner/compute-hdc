@@ -11,7 +11,7 @@ function ProbModel = getProbabilisticModel(index)
 %
 %   Feel free to add your probabilistic model (see line 135 & 139)
 
-% model 1
+% Model 1
 ProbModelVanem2012.name = 'Vanem and Bitner-Gregersen (2012)';
 ProbModelVanem2012.modelType = 'CMA';
 ProbModelVanem2012.distributions = {'weibull'; 'lognormal'};
@@ -22,9 +22,9 @@ ProbModelVanem2012.coeffs = {{2.776 1.471 0.8888};
                             };
 ProbModelVanem2012(1).labels = {'significant wave height (m)';
                                 'zero-upcrossing period [s]'};
-ProbModelVanem2012.gridCenterPoints = {0:0.1:20 0:0.1:18};
+ProbModelVanem2012.gridCenterPoints = {0:0.1:20; 0:0.1:18};
 
-% model 2
+% Model 2
 ProbModelMixtureModel1.name = 'mixture model 1 from Haselsteiner et al. (2017)';
 ProbModelMixtureModel1.modelType = 'CMA';
 ProbModelMixtureModel1(1).distributions = {'weibull'; 'lognormnormmixture'};
@@ -40,9 +40,9 @@ ProbModelMixtureModel1(1).coeffs = {{2.776 1.471 0.8888};
                                    };
 ProbModelMixtureModel1(1).labels = {'significant wave height (m)';
                                     'zero-upcrossing period (s)'};
-ProbModelMixtureModel1.gridCenterPoints = {0:0.1:20 0:0.1:18};
+ProbModelMixtureModel1.gridCenterPoints = {0:0.1:20; 0:0.1:18};
 
-% model 3
+% Model 3
 ProbModelMixtureModel2.name = 'mixture model 2 from Haselsteiner et al. (2017)';
 ProbModelMixtureModel2.modelType = 'CMA';
 ProbModelMixtureModel2(1).distributions = {'weibull'; 'lognormnormmixture'};
@@ -57,9 +57,9 @@ ProbModelMixtureModel2(1).coeffs = {{2.776 1.471 0.8888};
                                    };
 ProbModelMixtureModel2(1).labels = {'significant wave height (m)';
                                     'zero-upcrossing period (s)'};
-ProbModelMixtureModel2.gridCenterPoints = {0:0.1:20 0:0.1:18};
+ProbModelMixtureModel2.gridCenterPoints = {0:0.1:20; 0:0.1:18};
 
-% model 4
+% Model 4
 ProbModelVanem3d.name = 'Vanem and Bitner-Gregersen (2012) 3d';
 ProbModelVanem3d.modelType = 'CMA';
 ProbModelVanem3d(1).distributions = {'weibull'; 'lognormal'; 'lognormal'};
@@ -75,9 +75,9 @@ ProbModelVanem3d(1).coeffs = {{2.776 1.471 0.8888};
 ProbModelVanem3d(1).labels = {'significant wave height (m)';
                                'zero-upcrossing period (s)';
                                'x3 (-)'};
-ProbModelVanem3d.gridCenterPoints = {0:1:20 0:1:18 0:1:18};
+ProbModelVanem3d.gridCenterPoints = {0:1:20; 0:1:18; 0:1:18};
 
-% model 5
+% Model 5
 ProbModelVanem4d.name = 'Vanem and Bitner-Gregersen (2012) 4d';
 ProbModelVanem4d.modelType = 'CMA';
 ProbModelVanem4d(1).distributions = {'weibull';
@@ -104,9 +104,9 @@ ProbModelVanem4d(1).labels = {'significant wave height (m)';
                               'x3 (-)';
                               'x4 (-)';
                              };
-ProbModelVanem4d.gridCenterPoints = {0:1:20 0:1:18 0:1:18 0:1:18};
+ProbModelVanem4d.gridCenterPoints = {0:1:20; 0:1:18; 0:1:18; 0:1:18};
 
-% model 6
+% Model 6
 ProbModelMixtureModel23D.name = 'two HDRs 3D';
 ProbModelMixtureModel23D.modelType = 'CMA';
 ProbModelMixtureModel23D(1).distributions = {'weibull';
@@ -127,16 +127,27 @@ ProbModelMixtureModel23D(1).coeffs = {{2.776 1.471 0.8888};
 ProbModelMixtureModel23D(1).labels = {'significant wave height [m]';
                                       'zero-upcrossing period [s]';
                                       'x3 [-]'};
-ProbModelMixtureModel23D.gridCenterPoints = {0:0.5:20 0:0.5:18 0:0.5:18};
+ProbModelMixtureModel23D.gridCenterPoints = {0:0.5:20; 0:0.5:18; 0:0.5:18};
 
-% model 7
+% Model 7
 load('probabilistic_models/ProbModelKDE2d.mat', 'ProbModelKDE2d');
+
+% Model 8
+% This model was created by running examples/createMultivariateKDEModel.m
+load('probabilistic_models/ProbModelKDE3d.mat', 'ProbModelKDE3d');
 
 % Define your probabilistic model here.
 
-ProbModelArray = {ProbModelVanem2012 ProbModelMixtureModel1 ...
-    ProbModelMixtureModel2 ProbModelVanem3d ProbModelVanem4d ...
-    ProbModelMixtureModel23D, ProbModelKDE2d}; % And add it to the array here.
+ProbModelArray = {ProbModelVanem2012;
+    ProbModelMixtureModel1;
+    ProbModelMixtureModel2;
+    ProbModelVanem3d;
+    ProbModelVanem4d;
+    ProbModelMixtureModel23D;
+    ProbModelKDE2d;
+    ProbModelKDE3d;
+    % And add your model to the array here.
+    }; 
 
 ProbModel = ProbModelArray{index};
 

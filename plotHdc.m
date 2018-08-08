@@ -71,9 +71,9 @@ else
         ylabel(PM.labels{2});
         zlabel(PM.labels{3});
         title('R(fm)');
-        xlim([0 max(gridCenterPoints{1})]);
-        ylim([0 max(gridCenterPoints{2})]);
-        zlim([0 max(gridCenterPoints{3})]);
+        xlim([min(gridCenterPoints{1}) max(gridCenterPoints{1})]);
+        ylim([min(gridCenterPoints{2}) max(gridCenterPoints{2})]);
+        zlim([min(gridCenterPoints{3}) max(gridCenterPoints{3})]);
         axis square
 
         subplot(1,3,2)
@@ -83,9 +83,9 @@ else
         ylabel(PM.labels{2});
         zlabel(PM.labels{3});
         title('C(fm), points');
-        xlim([0 max(gridCenterPoints{1})]);
-        ylim([0 max(gridCenterPoints{2})]);
-        zlim([0 max(gridCenterPoints{3})]);
+        xlim([min(gridCenterPoints{1}) max(gridCenterPoints{1})]);
+        ylim([min(gridCenterPoints{2}) max(gridCenterPoints{2})]);
+        zlim([min(gridCenterPoints{3}) max(gridCenterPoints{3})]);
         axis square
         
         subplot(1,3,3);
@@ -97,9 +97,9 @@ else
         ylabel(PM.labels{2});
         zlabel(PM.labels{3});
         title('C(fm), triangulated');
-        xlim([0 max(gridCenterPoints{1})]);
-        ylim([0 max(gridCenterPoints{2})]);
-        zlim([0 max(gridCenterPoints{3})]);
+        xlim([min(gridCenterPoints{1}) max(gridCenterPoints{1})]);
+        ylim([min(gridCenterPoints{2}) max(gridCenterPoints{2})]);
+        zlim([min(gridCenterPoints{3}) max(gridCenterPoints{3})]);
         axis square
         
         if p>3

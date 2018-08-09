@@ -1,13 +1,15 @@
 function fbarjoint = jointCellAveragedDensityKDE(PM)
-%JOINTCELLAVERARAGEDPDF returns the cell-averaged joint probability density
+%JOINTCELLAVERAGEDDENSITYKDE returns the cell-averaged joint probability 
+%density
 %   PM                     probabilistic model of type 'KDE'
 %
-%   Note: The gridCenterPoints (PM.gridCenterPoints) must be in center 
-%   of the cdfGrid (PM.cdGrid). Consequently, gridCenterPoints are a 
-%   required field of the probabilistic model and cannot be changed without 
-%   changing the model's "cdf" and "cdfGrid" fields.
+%   Note: The grid center points (PM.gridCenterPoints) must be in center 
+%   of the grid used to evaluate the KDE (PM.cdGrid). Consequently, 
+%   gridCenterPoints are a required field of the probabilistic model and 
+%   cannot be changed without changing the model's "cdf" and "cdfGrid" 
+%   fields.
 %
-%   Currently supports up to 3 dimensions
+%   Supports probabilistic model with up to 3 dimensions.
 
 gridCenterPoints = PM.gridCenterPoints;
 

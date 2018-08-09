@@ -1,5 +1,6 @@
 function fbarjoint = jointCellAveragedDensityCMA(ProbModel, gridCenterPoints)
-%JOINTCELLAVERARAGEDPDF returns the cell-averaged joint probability density
+%JOINTCELLAVERAGEDDENSITYCMA returns the cell-averaged joint probability 
+%density
 %   PM              probabilistic model based on the conditonal modeling 
 %                   approach (modelType='CMA'). It is a struct and 
 %                   contains the following fields:

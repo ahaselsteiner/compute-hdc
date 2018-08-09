@@ -3,8 +3,8 @@ function fbarjoint = jointCellAveragedDensityKDE(PM)
 %density
 %   PM                     probabilistic model of type 'KDE'
 %
-%   Note: The grid center points (PM.gridCenterPoints) must be in center 
-%   of the grid used to evaluate the KDE (PM.cdGrid). Consequently, 
+%   Note: The grid center points (PM.gridCenterPoints) must be in centers 
+%   of the grid cells used to evaluate the KDE (PM.cdfGrid). Consequently, 
 %   gridCenterPoints are a required field of the probabilistic model and 
 %   cannot be changed without changing the model's "cdf" and "cdfGrid" 
 %   fields.

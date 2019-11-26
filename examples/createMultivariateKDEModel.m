@@ -42,7 +42,4 @@ alpha = 1/n;
 hold on
 scatter3(observations(:,1), observations(:,2), observations(:,3), ...
     'ob', 'linewidth', 4)
-
-% Author: Andreas F. Haselsteiner
-
                                

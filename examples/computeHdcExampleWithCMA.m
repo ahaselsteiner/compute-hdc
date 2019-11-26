@@ -10,7 +10,7 @@
 
 % Define a joint probability distribution (taken from Vanemn and Bitner-
 % Gregersen, 2012):
-ModelArray = getProbabilisticModel(1);
+PM = getProbabilisticModel(1);
 
 % Define an exceedance probability, alpha, based on a return period, nYears
 nYears = 50;
@@ -22,17 +22,15 @@ alpha = 1/n;
 gridCenterPoints = {0:0.1:20 0:0.1:18};
 
 % Calculate the highest density contour and plot it
-[fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ModelArray, alpha, ...
+[fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(PM, alpha, ...
     gridCenterPoints, 1);
 
 %% Example 2: 3-dimensional "contour" (surface)
 
 % Define a 3-dimensional joint probability distribution and a grid
-ModelArray = getProbabilisticModel(4);
-gridCenterPoints = ModelArray.gridCenterPoints;
+PM = getProbabilisticModel(4);
+gridCenterPoints = PM.gridCenterPoints;
 
 % Calculate the highest density contour and plot it
-[fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ModelArray, alpha, ...
+[fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(PM, alpha, ...
     gridCenterPoints, 1);
-
-%% Author: Andras F. Haselsteiner

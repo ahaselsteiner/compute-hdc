@@ -130,11 +130,11 @@ ProbModelMixtureModel23D(1).labels = {'significant wave height [m]';
 ProbModelMixtureModel23D.gridCenterPoints = {0:0.5:20; 0:0.5:18; 0:0.5:18};
 
 % Model 7
-load('probabilistic_models/ProbModelKDE2d.mat', 'ProbModelKDE2d');
+load('probabilistic-models/ProbModelKDE2d.mat', 'ProbModelKDE2d');
 
 % Model 8
 % This model was created by running examples/createMultivariateKDEModel.m
-load('probabilistic_models/ProbModelKDE3d.mat', 'ProbModelKDE3d');
+load('probabilistic-models/ProbModelKDE3d.mat', 'ProbModelKDE3d');
 
 % Define your probabilistic model here.
 

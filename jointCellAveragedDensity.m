@@ -30,8 +30,10 @@ if PM.modelType == 'CMA'
 elseif PM.modelType == 'KDE'
     fbarjoint = jointCellAveragedDensityKDE(PM);
     if min(fbarjoint(:)) < 0
-        disp('Minimum value of fbarjoint (due to ill defined cdf?!):')
-        min(fbarjoint(:))
+        msg = ['Minimum value of fbarjoint is negative (' ...
+            num2str(min(fbarjoint(:))) '). This is a current ' ...
+            'issue in the implementation, see https://github.com/ahaselsteiner/compute-hdc/issues/2'];
+        disp(msg);
     end
 else
     msg = ['An error occurred. Your probabilistic model must either be of' ...

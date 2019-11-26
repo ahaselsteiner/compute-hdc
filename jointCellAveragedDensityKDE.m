@@ -68,5 +68,3 @@ else
     msg = 'Currently only up to 3-dimensional models are supported.';
     error(msg);
 end
-
-% Author: Andreas F. Haselsteiner

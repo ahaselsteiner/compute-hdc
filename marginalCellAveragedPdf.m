@@ -58,5 +58,3 @@ switch PM.distribution
 end
 fbar = (Fhigh - Flow)./dx;
 end
-
-% Author: Andreas F. Haselsteiner

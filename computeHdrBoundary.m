@@ -51,5 +51,3 @@ else
     end
 end
 end
-
-% Author: Andreas F. Haselsteiner

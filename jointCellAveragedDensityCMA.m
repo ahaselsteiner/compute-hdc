@@ -89,5 +89,3 @@ fbarjoint = ones(sizeGridCenterPoints');
 for i = 1:length(gridCenterPoints)
     fbarjoint = fbarjoint .* fbarxj{i};
 end
-
-% Author: Andreas F. Haselsteiner

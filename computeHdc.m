@@ -103,5 +103,3 @@ if shouldPlot
     plotHdc(PM, alpha, gridCenterPoints, fbarjoint, hdrBinary, ...
         x1Hdc, x2Hdc, x3Hdc, x4Hdc);
 end
-
-% Author: Andreas F. Haselsteiner

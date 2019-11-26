@@ -118,5 +118,3 @@ else % thanks to: https://de.mathworks.com/matlabcentral/newsreader/view_thread/
     set(h,'Visible','on');
 end
 end
-
-% Author: Andreas F. Haselsteiner

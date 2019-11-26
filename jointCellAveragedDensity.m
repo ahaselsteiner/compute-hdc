@@ -55,6 +55,3 @@ if (probability_in_domain < MIN_PROB_IN_DOMAIN)
         '. Consider enlarging the computational domain.'];
     error(msg);
 end
-
-
-% Author: Andreas F. Haselsteiner

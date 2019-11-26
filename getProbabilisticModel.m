@@ -152,5 +152,3 @@ ProbModelArray = {ProbModelVanem2012;
 ProbModel = ProbModelArray{index};
 
 end
-
-% Author: Andreas F. Haselsteiner

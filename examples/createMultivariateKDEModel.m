@@ -29,12 +29,10 @@ ProbModelKDE3d.gridCenterPoints = {x + abs(x(1) - x(2))/2;
                                    y + abs(y(1) - y(2))/2
                                    z + abs(z(1) - z(2))/2};
                                
-
 % Define an exceedance probability, alpha, based on a return period, nYears
 nYears = 50;
 n = nYears * 365.25 * 24/3;
 alpha = 1/n;
-
 
 % Calculate the highest density contour and plot it.
 [fm, x1Hdc, x2Hdc, x3Hdc, x4Hdc] = computeHdc(ProbModelKDE3d, alpha, ...
@@ -42,4 +40,3 @@ alpha = 1/n;
 hold on
 scatter3(observations(:,1), observations(:,2), observations(:,3), ...
     'ob', 'linewidth', 4)
-                               

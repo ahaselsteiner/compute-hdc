@@ -9,5 +9,3 @@ cellProbability = R * cellSize;
 Fbar = sum(cellProbability(:));
 
 end
-
-% Author: Andras F. Haselsteiner, December 23, 2016

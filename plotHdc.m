@@ -1,6 +1,6 @@
-function plotHdc(ModelArray, alpha, gridCenterPoints, fbarjoint, hdrBinary, x1Hdc, x2Hdc, x3Hdc, x4Hdc)
+function plotHdc(PM, alpha, gridCenterPoints, fbarjoint, hdrBinary, x1Hdc, x2Hdc, x3Hdc, x4Hdc)
 %PLOTHDC plots a highest density contour
-%   ModelArray  probability density model
+%   PM          probabilistic model
 %   alpha       probability outside the contour / exceedance probability
 %   gridCenterPoints       grid center locations; formatted as cell,
 %                          thus gridCenterPoints{1} contains the vector
@@ -17,13 +17,13 @@ function plotHdc(ModelArray, alpha, gridCenterPoints, fbarjoint, hdrBinary, x1Hd
 p = length(gridCenterPoints); % number of dimensions
 
 figure();
-titleString = ['pdf: ' ModelArray(1).name ', alpha = ' num2str(alpha, '%.2e')];
+titleString = ['pdf: ' PM(1).name ', alpha = ' num2str(alpha, '%.2e')];
 if p == 2
     panelA = subplot(1,3,1);
     imagesc(gridCenterPoints{1}, gridCenterPoints{2}, fbarjoint')
     set(gca,'YDir','normal')
-    xlabel(ModelArray(1).label)
-    ylabel(ModelArray(2).label)
+    xlabel(PM.labels{1})
+    ylabel(PM.labels{2})
     title('pdf');
     colormap(panelA, jet)
     axis square
@@ -31,8 +31,8 @@ if p == 2
     panelB = subplot(1,3,2);
     imagesc(gridCenterPoints{1}, gridCenterPoints{2}, hdrBinary');
     set(gca,'YDir','normal')
-    xlabel(ModelArray(1).label)
-    ylabel(ModelArray(2).label)
+    xlabel(PM.labels{1})
+    ylabel(PM.labels{2})
     title('R(fm)');
     colormap(panelB, flipud(gray))
     axis square
@@ -44,8 +44,8 @@ if p == 2
     end
     xlim([0 max(gridCenterPoints{1})]);
     ylim([0 max(gridCenterPoints{2})]);
-    xlabel(ModelArray(1).label)
-    ylabel(ModelArray(2).label)
+    xlabel(PM.labels{1})
+    ylabel(PM.labels{2})
     title('C(fm)');
     axis square
 
@@ -67,25 +67,25 @@ else
         pointsHdr = [x1Hdr' x2Hdr' x3Hdr'];
         plot3(x1Hdr, x2Hdr, x3Hdr, '.b');
         view(3)
-        xlabel(ModelArray(1).label);
-        ylabel(ModelArray(2).label);
-        zlabel(ModelArray(3).label);
+        xlabel(PM.labels{1});
+        ylabel(PM.labels{2});
+        zlabel(PM.labels{3});
         title('R(fm)');
-        xlim([0 max(gridCenterPoints{1})]);
-        ylim([0 max(gridCenterPoints{2})]);
-        zlim([0 max(gridCenterPoints{3})]);
+        xlim([min(gridCenterPoints{1}) max(gridCenterPoints{1})]);
+        ylim([min(gridCenterPoints{2}) max(gridCenterPoints{2})]);
+        zlim([min(gridCenterPoints{3}) max(gridCenterPoints{3})]);
         axis square
 
         subplot(1,3,2)
         plot3(x1Hdc{1}, x2Hdc{1}, x3Hdc{1}, '.r');
         view(3)
-        xlabel(ModelArray(1).label);
-        ylabel(ModelArray(2).label);
-        zlabel(ModelArray(3).label);
+        xlabel(PM.labels{1});
+        ylabel(PM.labels{2});
+        zlabel(PM.labels{3});
         title('C(fm), points');
-        xlim([0 max(gridCenterPoints{1})]);
-        ylim([0 max(gridCenterPoints{2})]);
-        zlim([0 max(gridCenterPoints{3})]);
+        xlim([min(gridCenterPoints{1}) max(gridCenterPoints{1})]);
+        ylim([min(gridCenterPoints{2}) max(gridCenterPoints{2})]);
+        zlim([min(gridCenterPoints{3}) max(gridCenterPoints{3})]);
         axis square
         
         subplot(1,3,3);
@@ -93,13 +93,13 @@ else
         k = boundary(pointsHdr,SHRINK_FACTOR_3D); % see https://de.mathworks.com/help/matlab/ref/boundary.html
         trisurf(k,x1Hdr,x2Hdr,x3Hdr,'Facecolor','red','FaceAlpha',0.1);
         view(3)
-        xlabel(ModelArray(1).label);
-        ylabel(ModelArray(2).label);
-        zlabel(ModelArray(3).label);
+        xlabel(PM.labels{1});
+        ylabel(PM.labels{2});
+        zlabel(PM.labels{3});
         title('C(fm), triangulated');
-        xlim([0 max(gridCenterPoints{1})]);
-        ylim([0 max(gridCenterPoints{2})]);
-        zlim([0 max(gridCenterPoints{3})]);
+        xlim([min(gridCenterPoints{1}) max(gridCenterPoints{1})]);
+        ylim([min(gridCenterPoints{2}) max(gridCenterPoints{2})]);
+        zlim([min(gridCenterPoints{3}) max(gridCenterPoints{3})]);
         axis square
         
         if p>3
@@ -118,5 +118,3 @@ else % thanks to: https://de.mathworks.com/matlabcentral/newsreader/view_thread/
     set(h,'Visible','on');
 end
 end
-
-% code by Andras F. Haselsteiner, April 24th, 2017

@@ -51,5 +51,3 @@ else
     end
 end
 end
-
-% code by Andras F. Haselsteiner, November 7, 2017

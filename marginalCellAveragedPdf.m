@@ -23,7 +23,10 @@ function fbar = marginalCellAveragedPdf(PM, x, lowerDimensionalXArray)
 %                   mixture model combining a log-normal and normal pdf
 dx = x(2)-x(1);
 
-pdfCoeff = zeros(5,1); % setting all parameters to zero, --> Weibull [x1 x2] will become Weibull [x1 x2 0]
+% Set all possible parameters to zero.
+% Thus, Weibull [x1 x2] will become Weibull [x1 x2 0 0 0].
+pdfCoeff = zeros(5,1); 
+
 for i = 1:length(PM.coeff)
     if PM.isConditional(i)
         switch length(lowerDimensionalXArray)
@@ -45,7 +48,7 @@ switch PM.distribution
     case 'weibull' 
         Fhigh = wblcdf(x+0.5*dx - pdfCoeff(3), pdfCoeff(1), pdfCoeff(2));
         Flow = wblcdf(x-0.5*dx - pdfCoeff(3), pdfCoeff(1), pdfCoeff(2));
-    case 'lognormnormmixture' % for theory see: http://ww2.valdosta.edu/~jwang/paper/MixNormal.pdf
+    case 'lognormnormmixture' % For theory see: http://ww2.valdosta.edu/~jwang/paper/MixNormal.pdf
         cdf_lognormnormmixture = @(x,p,mulog,sigmalog, munorm, sigmanorm) ...
             p*logncdf(x, mulog, sigmalog) + (1-p)*normcdf(x,munorm,sigmanorm);
         Fhigh = cdf_lognormnormmixture(x+0.5*dx, pdfCoeff(1), ...
@@ -53,7 +56,7 @@ switch PM.distribution
         Flow = cdf_lognormnormmixture(x-0.5*dx, pdfCoeff(1), ...
             pdfCoeff(2), pdfCoeff(3), pdfCoeff(4), pdfCoeff(5));
     case 'exponentiated-weibull'
-        if exist('ExponentiatedWeibull') == 2
+        if exist('ExponentiatedWeibull') == 2 % Check if the class file is in the path.
             pd = ExponentiatedWeibull(pdfCoeff(1), pdfCoeff(2), pdfCoeff(3));
             Fhigh = pd.cdf(x + 0.5 * dx);
             Flow = pd.cdf(x - 0.5 * dx);
@@ -62,7 +65,7 @@ switch PM.distribution
                 'You may download it from: https://github.com/ahaselsteiner/exponentiated-weibull'];
             error(msg)
         end
-    otherwise % covers e.g. "normal" and "lognormal"
+    otherwise % Covers e.g. "normal" and "lognormal"
         Fhigh = cdf(PM.distribution, x+0.5*dx, pdfCoeff(1), pdfCoeff(2));
         Flow = cdf(PM.distribution, x-0.5*dx, pdfCoeff(1), pdfCoeff(2));
 end

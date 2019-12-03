@@ -52,6 +52,16 @@ switch PM.distribution
             pdfCoeff(2), pdfCoeff(3), pdfCoeff(4), pdfCoeff(5));
         Flow = cdf_lognormnormmixture(x-0.5*dx, pdfCoeff(1), ...
             pdfCoeff(2), pdfCoeff(3), pdfCoeff(4), pdfCoeff(5));
+    case 'exponentiated-weibull'
+        if exist('ExponentiatedWeibull') == 2
+            pd = ExponentiatedWeibull(pdfCoeff(1), pdfCoeff(2), pdfCoeff(3));
+            Fhigh = pd.cdf(x + 0.5 * dx);
+            Flow = pd.cdf(x - 0.5 * dx);
+        else
+            msg = ['The ExponentiatedWeibull class is not in your path. ' ...
+                'You may download it from: https://github.com/ahaselsteiner/exponentiated-weibull'];
+            error(msg)
+        end
     otherwise % covers e.g. "normal" and "lognormal"
         Fhigh = cdf(PM.distribution, x+0.5*dx, pdfCoeff(1), pdfCoeff(2));
         Flow = cdf(PM.distribution, x-0.5*dx, pdfCoeff(1), pdfCoeff(2));

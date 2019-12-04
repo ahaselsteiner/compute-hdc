@@ -1,4 +1,6 @@
 # compute-hdc
+![Environmental contour](example-environmental-contour.jpg)
+
 A software to compute a highest density (environmental) contour.
 
 A highest density contour is one possible definition for an environmental 

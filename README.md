@@ -1,4 +1,4 @@
-# compute-hdc
+# compute-hdc: Highest density contour method in Matlab
 ![Environmental contour](example-environmental-contour.jpg)
 
 A software to compute a highest density (environmental) contour.

@@ -20,5 +20,3 @@ which can be used with `computeHdc`.
 If you are using this software in your academic work please cite it as 
 A.F. Haselsteiner (2020): compute-hdc: Highest density contour method in 
 Matlab (version 1.2.0; https://github.com/ahaselsteiner/compute-hdc).
-
-(if you are using version 1.1.1)

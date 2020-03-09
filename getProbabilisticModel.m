@@ -18,7 +18,7 @@ ProbModelVanem2012.modelType = 'CMA';
 ProbModelVanem2012.distributions = {'weibull'; 'lognormal'};
 ProbModelVanem2012.isConditionals = {[0 0 0]; [1 1]};
 ProbModelVanem2012.coeffs = {{2.776 1.471 0.8888}; 
-                             { @(x1)0.1000 + 1.489 * x1^0.1901;
+                             { @(x1)0.1000 + 1.489 * x1.^0.1901;
                                @(x1)0.0400 + 0.1748 * exp(-0.2243*x1)}
                             };
 ProbModelVanem2012.labels = {'Significant wave height (m)';
@@ -148,9 +148,9 @@ PMWindWaveFINO1.isConditionals = {[0 0 0 ]; [1 1 0]};
 PMWindWaveFINO1.coeffs = {
     {10.0 2.42 0.761}; 
     { 
-    @(x1) (0.394 + 0.0178 * x1^1.88) / (2.0445^(1 / (0.582 + 1.90 / (1 + exp(-0.248 * (x1 - 8.49))))));
-    @(x1) 0.582 + 1.90 / (1 + exp(-0.248 * (x1 - 8.49)));
-    5}
+    @(x1) (0.488 + 0.0114 * x1^2.03) / (2.0445^(1 / (0.714 + 1.70 / (1 + exp(-0.304 * (x1 - 8.77))))));
+    @(x1) 0.714 + 1.70 / (1 + exp(-0.304 * (x1 - 8.77)));
+    @(x1) 5}
     };
 PMWindWaveFINO1.labels = {'Wind speed (m/s)';
     'Significant wave height (m)'};

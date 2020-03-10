@@ -1,5 +1,5 @@
 %% computeIsormContour
-% Returns the coordinates of an IFORM environmental contour.
+% Returns the coordinates of an ISORM environmental contour.
 % The implementation works only for two-dimensional models.
 %
 %% Function input parameters
@@ -48,13 +48,8 @@
 %
 %% Theoretical background
 %
-% IFORM (inverse first-order reliability method) contours were first
-% proposed by Winterstein et al. (1993).
-% The method is well established and recommended, for example, by 
-% the offshore wind turbien standard IEC 61300-3-1.
-%
-% IFORM contours are defined in standard normal variables.
-% Therefore the Rosenblatt transformation (Rosenblatt, 1952) is used.
+% ISORM (inverse second-order reliability method) contours were 
+% proposed by Chai and Leira, DOI: 10.1016/j.marstruc.2018.03.007
 %
 %% License & repository
 % https://github.com/ahaselsteiner/compute-hdc
@@ -84,8 +79,10 @@ end
 angleStep = 360 / nAngles;
 angleArray = [0 : angleStep : 360 - angleStep];
 
-%beta = icdf('normal', 1 - alpha, 0, 1); % IFORM
-beta = sqrt(chi2inv(1 - alpha, 2)); % see Chai and Leira (2018), equation 20.
+% Compute the reliability index, see Chai and Leira (2018), equation 20.
+% For comparision, in IFORM beta = icdf('normal', 1 - alpha, 0, 1);
+beta = sqrt(chi2inv(1 - alpha, 2)); 
+
 u1Array = beta * cos(angleArray / 180 * pi);
 u2Array = beta * sin(angleArray / 180 * pi);
 

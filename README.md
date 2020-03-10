@@ -14,10 +14,11 @@ an exceedance probability and a grid as its input.
 * `getProbabilisticModel`: Returns some sample probabilistic models, 
 which can be used with `computeHdc`. 
 * The other functions are subroutines needed for `computeHdc`.
-* `computeIFormContour` and `computeISormContour` compute IFORM and 
- ISORM environmental contours. IFORM and ISORM use different concepts for 
- how an environmental contour is defined.
+* `computeIFormContour`, `computeDsContour` and `computeISormContour` 
+ compute IFORM, direct sampling, and ISORM environmental contours. These 
+ methods use different concepts for the definition of an environmental 
+ contour.
 
 If you are using this software in your academic work please cite it as 
 A.F. Haselsteiner (2020): compute-hdc: Highest density contour method in 
-Matlab (version 1.2.0; https://github.com/ahaselsteiner/compute-hdc).
+Matlab (version 1.2.2; https://github.com/ahaselsteiner/compute-hdc).

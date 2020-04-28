@@ -10,7 +10,7 @@ Wosniok and Thoben (2017; http://doi.org/10.1016/j.coastaleng.2017.03.002)
 ## Download and use the repository
 To download this repository and its submodules use
 ```console
-git clone --recurse-submodules https://github.com/ahaselsteiner/2020-note-on-contours.git
+git clone --recurse-submodules https://github.com/ahaselsteiner/compute-hdc.git
 ```
 
 ## Individual files and functionality

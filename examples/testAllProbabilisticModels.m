@@ -1,4 +1,4 @@
-for i =1:8
+for i = 1 : 9
     % Load a probabilistic model.
     PM = getProbabilisticModel(i);
 

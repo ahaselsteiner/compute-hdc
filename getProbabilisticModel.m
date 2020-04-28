@@ -44,7 +44,7 @@ ProbModelMixtureModel1.labels = {'Significant wave height (m)';
 ProbModelMixtureModel1.gridCenterPoints = {0:0.1:20; 0:0.1:18};
 
 % Model 3
-ProbModelMixtureModel2.name = 'mixture model 2 from Haselsteiner et al. (2017)';
+ProbModelMixtureModel2.name = 'Mixture model 2 from Haselsteiner et al. (2017)';
 ProbModelMixtureModel2.modelType = 'CMA';
 ProbModelMixtureModel2.distributions = {'weibull'; 'lognormnormmixture'};
 ProbModelMixtureModel2.isConditionals = {[0 0 0]; [1 1 1 0 0];};
@@ -108,7 +108,7 @@ ProbModelVanem4d.labels = {'Significant wave height (m)';
 ProbModelVanem4d.gridCenterPoints = {0:1:20; 0:1:18; 0:1:18; 0:1:18};
 
 % Model 6
-ProbModelMixtureModel23D.name = 'two HDRs 3D';
+ProbModelMixtureModel23D.name = 'Two HDRs 3D';
 ProbModelMixtureModel23D.modelType = 'CMA';
 ProbModelMixtureModel23D.distributions = {'weibull';
                                              'lognormnormmixture';
@@ -150,7 +150,7 @@ PMWindWaveFINO1.coeffs = {
     { 
     @(x1) (0.488 + 0.0114 * x1^2.03) / (2.0445^(1 / (0.714 + 1.70 / (1 + exp(-0.304 * (x1 - 8.77))))));
     @(x1) 0.714 + 1.70 / (1 + exp(-0.304 * (x1 - 8.77)));
-    @(x1) 5}
+    5}
     };
 PMWindWaveFINO1.labels = {'Wind speed (m/s)';
     'Significant wave height (m)'};

@@ -139,7 +139,7 @@ for i = 1:length(x1Array)
             x2Array(i) = dist.icdf(probabilityU2Array(i));
         otherwise
             x2Array(i) = icdf(PM.distributions{2}, probabilityU2Array(i), ...
-                PM.coeffs{2}{1}(x1Array(i)), PM.coeffs{2}{2}(x1Array(i)));
+                coeffs{1}, coeffs{2});
     end
 end
 
